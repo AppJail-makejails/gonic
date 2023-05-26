@@ -1,0 +1,54 @@
+INCLUDE options/options.makejail
+
+ARG gonic_builder=gonic-builder
+ARG gonic_builder_network
+ARG gonic_builder_interface=gonicb
+ARG gonic_jukebox=1
+ARG gonic_transcode_audio=1
+
+CMD echo "======> Building gonic... <======"
+
+EXEC --file build.makejail --name "${gonic_builder}" --arg "network=${gonic_builder_network}" --arg "interface=${gonic_builder_interface}"
+
+CMD echo "======> Creating directories... <======"
+
+CMD mkdir -vp /usr/local/bin
+CMD mkdir -vp /usr/local/lib
+
+CMD echo "======> Installing gonic... <======"
+
+COPY --verbose --jail "${gonic_builder}" /gonic/gonic /usr/local/bin
+COPY --verbose --jail "${gonic_builder}" --glob-right /usr/local/lib/libtag.so /usr/local/lib
+
+CMD echo "======> Restarting ldconfig... <======"
+SERVICE ldconfig restart
+
+RAW if [ "${gonic_jukebox}" != 0 ]; then
+	CMD echo "======> Installing dependencies (jukebox)... <======"
+	PKG mpv
+RAW fi
+
+RAW if [ "${gonic_transcode_audio}" != 0 ]; then
+	CMD echo "======> Installing dependencies (transcode audio)... <======"
+	PKG ffmpeg
+RAW fi
+
+CMD echo "======> Destroying builder... <======"
+
+DESTROY --force "${gonic_builder}"
+
+CMD echo "======> Creating user 'gonic' <======"
+CMD pw useradd -n gonic -c "Music streaming server / subsonic server API implementation" -d /var/db/gonic -s /bin/sh
+CMD mkdir -p /var/db/gonic
+CMD mkdir -p /var/db/gonic/data
+CMD mkdir -p /var/db/gonic/music
+CMD mkdir -p /var/db/gonic/podcasts
+CMD mkdir -p /var/db/gonic/playlists
+CMD mkdir -p /var/cache/gonic
+CMD chown -vR gonic:gonic /var/db/gonic
+CMD chown -v gonic:gonic /var/cache/gonic
+
+CMD echo "======> Installing rc script... <======"
+CMD mkdir -vp /usr/local/etc/rc.d
+COPY --verbose files/gonic.in /usr/local/etc/rc.d/gonic
+CMD chmod +x /usr/local/etc/rc.d/gonic

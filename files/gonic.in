@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# PROVIDE: gonic
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name=gonic
+desc="Music streaming server / subsonic server API implementation"
+rcvar=${name}_enable
+
+start_precmd="gonic_startprecmd"
+
+load_rc_config "${name}"
+
+: ${gonic_enable:="NO"}
+: ${gonic_user:="gonic"}
+: ${gonic_group:="gonic"}
+: ${gonic_args:="-cache-path /var/cache/gonic -db-path /var/db/gonic/data/gonic.db -listen-addr 0.0.0.0:4747 -music-path /var/db/gonic/music -playlists-path /var/db/gonic/playlists -podcast-path /var/db/gonic/podcasts -scan-interval 3 -jukebox-enabled -scan-at-start-enabled -scan-watcher-enabled"}
+: ${gonic_logfile="/var/log/gonic.log"}
+
+pidfile="/var/run/gonic.pid"
+procname="/usr/local/bin/gonic"
+command="/usr/sbin/daemon"
+command_args="-c -p ${pidfile} -o ${gonic_logfile} ${procname} ${gonic_args}"
+
+gonic_startprecmd()
+{
+	if [ ! -e "${pidfile}" ]; then
+		install -o "${gonic_user}" -g "${gonic_group}" /dev/null "${pidfile}"
+	fi
+
+	if [ ! -e "${gonic_logfile}" ]; then
+		install -o "${gonic_user}" -g "${gonic_group}" /dev/null "${gonic_logfile}"
+	fi
+}
+
+run_rc_command "$1"
