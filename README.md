@@ -35,7 +35,7 @@ The Makejail builder needs a virtual network, but you can use any network option
 
 ```
 INCLUDE options/network.makejail
-INCLUDE gonic/Makejail
+INCLUDE gh+AppJail-makejails/gonic
 
 OPTION expose=4747
 
