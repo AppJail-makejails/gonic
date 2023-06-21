@@ -114,15 +114,39 @@ appjail restart gonic
 
 ## How to build the Image
 
+Make any changes you want to your image.
+
 ```
-appjail makejail -j gonic -f "gh+AppJail-makejails/gonic --file build.makejail" -- --gonic_options "$PWD/options/network.makejail"
+INCLUDE options/network.makejail
+INCLUDE gh+AppJail-makejails/gonic --file build.makejail
+
+SYSRC gonic_enable=YES
+SERVICE gonic start
+```
+
+Build the jail:
+
+```
+# Default options
+appjail makejail -j gonic -- \
+    --gonic_options "$PWD/options/network.makejail"
+# Minimal
+appjail makejail -j gonic -- \
+    --gonic_jukebox 0 \
+    --gonic_transcode_audio 0 \
+    --gonic_options "$PWD/options/network.makejail"
+```
+
+Remove unportable or unnecessary files and directories and export the jail:
+
+```
 appjail sysrc jail gonic -x defaultrouter
 appjail stop gonic
 appjail cmd local gonic sh -c "rm -f var/log/*"
 appjail cmd local gonic sh -c "rm -f var/cache/pkg/*"
 appjail cmd local gonic sh -c "rm -f var/db/pkg/*"
 appjail cmd local gonic sh -c "rm -rf tmp/gonic-jukebox-*"
-appjail cmd local gonic rm -f var/db/gonic/data/gonic.db
+appjail cmd local gonic sh -c "rm -f var/db/gonic/data/*"
 appjail image export gonic
 ```
 
