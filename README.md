@@ -52,11 +52,6 @@ MOUNT "${playlistsdir}" /var/db/gonic/playlists
 CMD chown -R gonic:gonic /var/db/gonic
 CMD chown -R gonic:gonic /var/cache/gonic
 
-#CMD echo "======> Starting gonic... <======"
-# If you want to use the rc script that comes with the Makejail:
-#SYSRC gonic_enable=YES
-#SERVICE gonic start
-
 CMD echo
 CMD echo "===> Done <==="
 CMD echo
