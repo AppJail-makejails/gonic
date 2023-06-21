@@ -17,13 +17,21 @@ load_rc_config "${name}"
 : ${gonic_enable:="NO"}
 : ${gonic_user:="gonic"}
 : ${gonic_group:="gonic"}
-: ${gonic_args:="-cache-path /var/cache/gonic -db-path /var/db/gonic/data/gonic.db -listen-addr 0.0.0.0:4747 -music-path /var/db/gonic/music -playlists-path /var/db/gonic/playlists -podcast-path /var/db/gonic/podcasts -scan-interval 3 -jukebox-enabled -scan-at-start-enabled -scan-watcher-enabled"}
-: ${gonic_logfile="/var/log/gonic.log"}
+: ${gonic_logfile:="/var/log/gonic.log"}
+: ${gonic_cachedir:="/var/cache/gonic"}
+: ${gonic_database:="/var/db/gonic/data/gonic.db"}
+: ${gonic_listen:="0.0.0.0:4747"}
+: ${gonic_musicdir:="/var/db/gonic/music"}
+: ${gonic_playlistdir:="/var/db/gonic/playlists"}
+: ${gonic_podcastdir:="/var/db/gonic/podcasts"}
+: ${gonic_scan_interval="3"}
+: ${gonic_scan_at_start="YES"}
+: ${gonic_scan_watcher="YES"}
+: ${gonic_jukebox="NO"}
 
 pidfile="/var/run/gonic.pid"
 procname="/usr/local/bin/gonic"
-command="/usr/sbin/daemon"
-command_args="-c -p ${pidfile} -o ${gonic_logfile} ${procname} ${gonic_args}"
+start_cmd="gonic_start"
 
 gonic_startprecmd()
 {
@@ -34,6 +42,39 @@ gonic_startprecmd()
 	if [ ! -e "${gonic_logfile}" ]; then
 		install -o "${gonic_user}" -g "${gonic_group}" /dev/null "${gonic_logfile}"
 	fi
+}
+
+gonic_start()
+{
+	if [ -n "${gonic_scan_interval}" ]; then
+		gonic_args="${gonic_args} -scan-interval ${gonic_scan_interval}"
+	fi
+
+	if checkyesno gonic_scan_at_start; then
+		gonic_args="${gonic_args} -scan-at-start-enabled"
+	fi
+
+	if checkyesno gonic_scan_watcher; then
+		gonic_args="${gonic_args} -scan-watcher-enabled"
+	fi
+
+	if checkyesno gonic_jukebox; then
+		gonic_args="${gonic_args} -jukebox-enabled"
+	fi
+
+	echo "Starting gonic." &&
+		/usr/sbin/daemon -c \
+			-u "${gonic_user}" \
+			-p "${pidfile}" \
+			-o "${gonic_logfile}" \
+			"${procname}" \
+			-cache-path "${gonic_cachedir}" \
+			-db-path "${gonic_database}" \
+			-listen-addr "${gonic_listen}" \
+			-music-path "${gonic_musicdir}" \
+			-playlists-path "${gonic_playlistdir}" \
+			-podcast-path "${gonic_podcastdir}" \
+			${gonic_args}
 }
 
 run_rc_command "$1"

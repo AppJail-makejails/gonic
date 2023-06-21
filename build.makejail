@@ -1,16 +1,54 @@
-INCLUDE options/network.makejail
-INCLUDE gh+AppJail-makejails/go
+INCLUDE options/options.makejail
 
-CMD echo "======> Installing dependencies (build) <======"
-PKG git-lite pkgconf taglib sqlite3
+ARG gonic_builder=gonicb
+ARG gonic_options
+ARG gonic_jukebox=1
+ARG gonic_transcode_audio=1
 
-CMD echo "======> Cloning... <======"
-CMD git clone --depth 1 https://github.com/sentriz/gonic.git /gonic
+CMD echo "======> Building gonic... <======"
 
-CMD echo "======> Compiling... <======"
+EXEC --before-include "${gonic_options}" --file builder.makejail --name "${gonic_builder}"
 
-WORKDIR /gonic
+CMD echo "======> Creating directories... <======"
 
-RUN go mod download
-ENV GOOS=freebsd
-RUN %{GO_EXECUTABLE} build -o gonic cmd/gonic/gonic.go
+CMD mkdir -vp /usr/local/bin
+CMD mkdir -vp /usr/local/lib
+
+CMD echo "======> Installing gonic... <======"
+
+COPY --verbose --jail "${gonic_builder}" /gonic/gonic /usr/local/bin
+COPY --verbose --jail "${gonic_builder}" --glob-right /usr/local/lib/libtag.so /usr/local/lib
+
+CMD echo "======> Restarting ldconfig... <======"
+SERVICE ldconfig restart
+
+RAW if [ "${gonic_jukebox}" != 0 ]; then
+	CMD echo "======> Installing dependencies (jukebox)... <======"
+	PKG mpv
+	SYSRC gonic_jukebox=YES
+RAW fi
+
+RAW if [ "${gonic_transcode_audio}" != 0 ]; then
+	CMD echo "======> Installing dependencies (transcode audio)... <======"
+	PKG ffmpeg
+RAW fi
+
+CMD echo "======> Destroying builder... <======"
+
+DESTROY --force "${gonic_builder}"
+
+CMD echo "======> Creating user 'gonic' <======"
+CMD pw useradd -n gonic -c "Music streaming server / subsonic server API implementation" -d /var/db/gonic -s /bin/sh
+CMD mkdir -p /var/db/gonic
+CMD mkdir -p /var/db/gonic/data
+CMD mkdir -p /var/db/gonic/music
+CMD mkdir -p /var/db/gonic/podcasts
+CMD mkdir -p /var/db/gonic/playlists
+CMD mkdir -p /var/cache/gonic
+CMD chown -vR gonic:gonic /var/db/gonic
+CMD chown -v gonic:gonic /var/cache/gonic
+
+CMD echo "======> Installing rc script... <======"
+CMD mkdir -vp /usr/local/etc/rc.d
+COPY --verbose files/gonic.in /usr/local/etc/rc.d/gonic
+CMD chmod +x /usr/local/etc/rc.d/gonic

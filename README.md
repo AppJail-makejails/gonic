@@ -27,10 +27,6 @@ github.com/sentriz/gonic
 
 ## How to use this Makejail
 
-### Requirements
-
-The Makejail builder needs a virtual network, but you can use any network option you want for the main Makejail.
-
 ### Basic usage
 
 ```
@@ -84,7 +80,7 @@ RUN gonic
 Where `options/network.makejail` are the options that suit your environment, for example:
 
 ```
-ARG network
+ARG network?
 ARG interface=gonic
 
 OPTION virtualnet=${network}:${interface} default
@@ -94,7 +90,9 @@ OPTION nat
 Open a shell and run `appjail makejail`:
 
 ```sh
-appjail makejail -j gonic -- --network testing --gonic_builder_network testing
+appjail makejail -j gonic
+# or use a network explicitly
+appjail makejail -j gonic -- --network development
 ```
 
 ### Jukebox
@@ -114,10 +112,25 @@ appjail-config set -j gonic devfs_ruleset=12
 appjail restart gonic 
 ```
 
-### Arguments
+## How to build the Image
 
-* gonic\_builder (default: `gonic-builder`): Makejail builder name.
-* gonic\_builder\_network (mandatory): Virtual network that the Makejail builder will use.
-* gonic\_builder\_interface (default: `gonicb`): Interface name that the Makejail builder will create to use as its interface.
-* gonic\_jukebox (default: `1`): Install the dependencies required by the jukebox mode.
-* gonic\_transcode\_audio (default: `1`): Install the dependencies required to transcode audio.
+```
+appjail makejail -j gonic -f "gh+AppJail-makejails/gonic --file build.makejail" -- --gonic_options "$PWD/options/network.makejail"
+appjail sysrc jail gonic -x defaultrouter
+appjail stop gonic
+appjail cmd local gonic sh -c "rm -f var/log/*"
+appjail cmd local gonic sh -c "rm -f var/cache/pkg/*"
+appjail cmd local gonic sh -c "rm -f var/db/pkg/*"
+appjail cmd local gonic sh -c "rm -rf tmp/gonic-jukebox-*"
+appjail cmd local gonic rm -f var/db/gonic/data/gonic.db
+appjail image export gonic
+```
+
+## Tags
+
+* `latest` (osarch: `amd64`, osversion: `13.2-RELEASE`):
+  - `gonic_jukebox`: `1`
+  - `gonic_transcode_audio`: `1`
+* `minimal` (osarch: `amd64`, osversion: `13.2-RELEASE`):
+  - `gonic_jukebox`: `0`
+  - `gonic_transcode_audio`: `0`
