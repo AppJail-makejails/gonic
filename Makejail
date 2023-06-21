@@ -1,3 +1,5 @@
+INCLUDE options/options.makejail
+
 ARG gonic_tag=latest
 
 FROM --entrypoint gh+AppJail-makejails/gonic gonic:${gonic_tag}
