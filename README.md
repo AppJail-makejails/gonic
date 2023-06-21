@@ -126,7 +126,7 @@ SERVICE gonic start
 
 Build the jail:
 
-```
+```sh
 # Default options
 appjail makejail -j gonic -- \
     --gonic_options "$PWD/options/network.makejail"
@@ -139,7 +139,7 @@ appjail makejail -j gonic -- \
 
 Remove unportable or unnecessary files and directories and export the jail:
 
-```
+```sh
 appjail sysrc jail gonic -x defaultrouter
 appjail stop gonic
 appjail cmd local gonic sh -c "rm -f var/log/*"
