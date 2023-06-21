@@ -1,5 +1,0 @@
-ARG network
-ARG interface=gonicb
-
-OPTION virtualnet=${network}:${interface} default
-OPTION nat
