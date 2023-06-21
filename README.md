@@ -108,6 +108,7 @@ add path 'dsp*' unhide
 and:
 
 ```sh
+service devfs restart
 appjail-config set -j gonic devfs_ruleset=12
 appjail restart gonic 
 ```
