@@ -113,6 +113,10 @@ appjail-config set -j gonic devfs_ruleset=12
 appjail restart gonic 
 ```
 
+### Arguments
+
+* `gonic_tag` (default: `latest`): see [#tags](#tags).
+
 ## How to build the Image
 
 ```
@@ -126,6 +130,13 @@ appjail cmd local gonic sh -c "rm -rf tmp/gonic-jukebox-*"
 appjail cmd local gonic rm -f var/db/gonic/data/gonic.db
 appjail image export gonic
 ```
+
+### Arguments
+
+* `gonic_builder` (default: `gonicb`): Makejail builder name.
+* `gonic_options` (mandatory): Makejail that contains options for the Makejail builder. This Makejail is intended for passing network options. An absolute path must be passed.
+* `gonic_jukebox` (default: `1`): Install the dependencies required by the jukebox mode.
+* `gonic_transcode_audio` (default: `1`): Install the dependencies required to transcode audio.
 
 ## Tags
 
