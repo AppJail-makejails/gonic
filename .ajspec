@@ -1,12 +1,13 @@
 minimal.name: "gonic"
-minimal.timestamp: 1687360167
-minimal.sum.amd64: f974fa21821a8f06bdb5e2c167df5c214664c75065777e3100afe7ffcfc34279
-minimal.size.amd64: 12631888
-minimal.source.amd64: https://dtxdf.duckdns.org/0aP7Rfxez9/gonic_minimal_amd64_image_appjail
-minimal.source.amd64+: https://anonget.onrender.com/0aP7Rfxez9/gonic_minimal_amd64_image_appjail
+minimal.timestamp: 1687379851
+minimal.sum.amd64: b3179c173ea9cf0170303ad0b3efc443038edc8f3b8a91b8ec6f2f80603abae3
+minimal.size.amd64: 12404300
+minimal.source.amd64: https://dtxdf.duckdns.org/N9t6U0x1z5/gonic_minimal_amd64_image_appjail
+minimal.source.amd64+: https://anonget.onrender.com/N9t6U0x1z5/gonic_minimal_amd64_image_appjail
+
 latest.name: "gonic"
-latest.timestamp: 1687362804
-latest.sum.amd64: 80a649919967c62caaaf9a55ee8482fbcb6fe062d3b11aad50b025fa2f7c817a
-latest.size.amd64: 117398500
-latest.source.amd64: https://dtxdf.duckdns.org/TeQ1R2xbzb/gonic_latest_amd64_image_appjail
-latest.source.amd64+: https://anonget.onrender.com/TeQ1R2xbzb/gonic_latest_amd64_image_appjail
+latest.timestamp: 1687382494
+latest.sum.amd64: 342ffef8f02f792d1b98f56972bd6632dd71a21ee271bebb50d20cd788eb2bde
+latest.size.amd64: 117669148
+latest.source.amd64: https://dtxdf.duckdns.org/j1ucU8x3z6/gonic_latest_amd64_image_appjail
+latest.source.amd64+: https://anonget.onrender.com/j1ucU8x3z6/gonic_latest_amd64_image_appjail
