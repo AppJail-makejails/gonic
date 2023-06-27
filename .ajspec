@@ -1,12 +1,16 @@
+tags: minimal
+minimal.arch: amd64
 minimal.name: "gonic"
-minimal.timestamp: 1687379851
+minimal.timestamp.amd64: 1687379851
 minimal.sum.amd64: b3179c173ea9cf0170303ad0b3efc443038edc8f3b8a91b8ec6f2f80603abae3
 minimal.size.amd64: 12404300
 minimal.source.amd64: https://dtxdf.duckdns.org/N9t6U0x1z5/gonic_minimal_amd64_image_appjail
 minimal.source.amd64+: https://anonget.onrender.com/N9t6U0x1z5/gonic_minimal_amd64_image_appjail
 
+tags+: latest
+latest.arch: amd64
 latest.name: "gonic"
-latest.timestamp: 1687382494
+latest.timestamp.amd64: 1687382494
 latest.sum.amd64: 342ffef8f02f792d1b98f56972bd6632dd71a21ee271bebb50d20cd788eb2bde
 latest.size.amd64: 117669148
 latest.source.amd64: https://dtxdf.duckdns.org/j1ucU8x3z6/gonic_latest_amd64_image_appjail
