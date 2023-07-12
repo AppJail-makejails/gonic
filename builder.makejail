@@ -1,7 +1,5 @@
-INCLUDE gh+AppJail-makejails/go
-
 CMD echo "======> Installing dependencies (build) <======"
-PKG git-lite pkgconf taglib sqlite3
+PKG git-lite go pkgconf taglib sqlite3
 
 CMD echo "======> Cloning... <======"
 CMD git clone --depth 1 https://github.com/sentriz/gonic.git /gonic
@@ -12,4 +10,4 @@ WORKDIR /gonic
 
 RUN go mod download
 ENV GOOS=freebsd
-RUN %{GO_EXECUTABLE} build -o gonic cmd/gonic/gonic.go
+RUN go build -o gonic cmd/gonic/gonic.go
