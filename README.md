@@ -110,7 +110,7 @@ appjail restart gonic
 
 ### Arguments
 
-* `gonic_tag` (default: `latest`): see [#tags](#tags).
+* `gonic_tag` (default: `13.2-full`): see [#tags](#tags).
 
 ## How to build the Image
 
@@ -159,9 +159,9 @@ appjail image export gonic
 
 ## Tags
 
-* `latest` (osarch: `amd64`, osversion: `13.2-RELEASE`):
-  - `gonic_jukebox`: `1`
-  - `gonic_transcode_audio`: `1`
-* `minimal` (osarch: `amd64`, osversion: `13.2-RELEASE`):
-  - `gonic_jukebox`: `0`
-  - `gonic_transcode_audio`: `0`
+| Tag            | Arch     | Version        | `gonic_jukebox` | `gonic_transcode_audio` |
+| -------------- | -------- | -------------- | --------------- | ----------------------- |
+| `13.2-full`    | `amd64`  | `13.2-RELEASE` |       1         |            1            |
+| `13.2-minimal` | `amd64`  | `13.2-RELEASE` |       0         |            0            |
+| `13.1-full`    | `amd64`  | `13.1-RELEASE` |       1         |            1            |
+| `13.1-minimal` | `amd64`  | `13.1-RELEASE` |       0         |            0            |
