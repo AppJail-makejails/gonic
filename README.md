@@ -144,7 +144,6 @@ appjail sysrc jail gonic -x defaultrouter
 appjail stop gonic
 appjail cmd local gonic sh -c "rm -f var/log/*"
 appjail cmd local gonic sh -c "rm -f var/cache/pkg/*"
-appjail cmd local gonic sh -c "rm -f var/db/pkg/*"
 appjail cmd local gonic sh -c "rm -rf tmp/gonic-jukebox-*"
 appjail cmd local gonic sh -c "rm -f var/db/gonic/data/*"
 appjail image export gonic
