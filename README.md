@@ -158,9 +158,9 @@ appjail image export gonic
 
 ## Tags
 
-| Tag            | Arch     | Version        | `gonic_jukebox` | `gonic_transcode_audio` |
-| -------------- | -------- | -------------- | --------------- | ----------------------- |
-| `13.2-full`    | `amd64`  | `13.2-RELEASE` |       1         |            1            |
-| `13.2-minimal` | `amd64`  | `13.2-RELEASE` |       0         |            0            |
-| `13.1-full`    | `amd64`  | `13.1-RELEASE` |       1         |            1            |
-| `13.1-minimal` | `amd64`  | `13.1-RELEASE` |       0         |            0            |
+| Tag            | Arch     | Version           | `gonic_jukebox` | `gonic_transcode_audio` |
+| -------------- | -------- | ----------------- | --------------- | ----------------------- |
+| `13.2-full`    | `amd64`  | `13.2-RELEASE-p1` |       1         |            1            |
+| `13.2-minimal` | `amd64`  | `13.2-RELEASE-p1` |       0         |            0            |
+| `13.1-full`    | `amd64`  | `13.1-RELEASE-p8` |       1         |            1            |
+| `13.1-minimal` | `amd64`  | `13.1-RELEASE-p8` |       0         |            0            |
