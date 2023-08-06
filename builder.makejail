@@ -1,3 +1,5 @@
+INCLUDE options/options.makejail
+
 CMD echo "======> Installing dependencies (build) <======"
 PKG git-lite go pkgconf taglib sqlite3
 
