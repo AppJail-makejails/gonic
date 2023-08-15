@@ -1,19 +1,15 @@
 tags: 13.2-full
 13.2-full.arch: amd64
 13.2-full.name: "gonic"
-13.2-full.timestamp.amd64: 1691339424
-13.2-full.sum.amd64: 1f79f7691a208d2e484339325ea2e672d0dda41f175702c67796f22708d151f2
-13.2-full.size.amd64: 136950944
-13.2-full.source.amd64: https://dtxdf.duckdns.org/oexaR36czb/gonic_13_2_full_amd64_image_appjail
-13.2-full.source.amd64+: https://storm-bsd.duckdns.org/oexaR36czb/gonic_13_2_full_amd64_image_appjail
-13.2-full.source.amd64+: https://anonget.onrender.com/oexaR36czb/gonic_13_2_full_amd64_image_appjail
+13.2-full.timestamp.amd64: 1692010294
+13.2-full.sum.amd64: 934c4c9e059451478949bb937fe9e90be971cf46ab7a87c584f062f1ce5458c8
+13.2-full.size.amd64: 136758144
+13.2-full.source.amd64: "https://drive.google.com/uc?export=download&id=1vxLLqW-togfg_AhrsCrCO8gOaEl5h54n&confirm=t&uuid=2079cdac-b5c1-480c-8fdb-10b602ed3295"
 
 tags+: 13.2-minimal
 13.2-minimal.arch: amd64
 13.2-minimal.name: "gonic"
-13.2-minimal.timestamp.amd64: 1691338534
-13.2-minimal.sum.amd64: a81d1b15b59078e7f5a5304f9fb923a97f29dc32626605ecf347d953965b7a61
-13.2-minimal.size.amd64: 12401556
-13.2-minimal.source.amd64: https://dtxdf.duckdns.org/9dw4R56bze/gonic_13_2_minimal_amd64_image_appjail
-13.2-minimal.source.amd64+: https://storm-bsd.duckdns.org/9dw4R56bze/gonic_13_2_minimal_amd64_image_appjail
-13.2-minimal.source.amd64+: https://anonget.onrender.com/9dw4R56bze/gonic_13_2_minimal_amd64_image_appjail
+13.2-minimal.timestamp.amd64: 1692011473
+13.2-minimal.sum.amd64: 8cf243d574af427961947d8a7ab38dcfe8a3ac7d18e580b5611b39eb159fcf18
+13.2-minimal.size.amd64: 12639472
+13.2-minimal.source.amd64: "https://drive.google.com/uc?export=download&id=1vyD7kFwM30FF1T7ffVZp7KZ0Nt9Ep76a"
