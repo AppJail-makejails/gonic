@@ -121,7 +121,6 @@ INCLUDE options/network.makejail
 INCLUDE gh+AppJail-makejails/gonic --file build.makejail
 
 SYSRC gonic_enable=YES
-SERVICE gonic start
 ```
 
 Build the jail:
