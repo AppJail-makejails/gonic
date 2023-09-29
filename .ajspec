@@ -1,15 +1,15 @@
 tags: 13.2-full
 13.2-full.arch: amd64
 13.2-full.name: "gonic"
-13.2-full.timestamp.amd64: 1694787981
-13.2-full.sum.amd64: dafd205a6de94e975e61cab8fd50146afcbda650b425fb0ca715f5391ffc76d9
-13.2-full.size.amd64: 136808512
+13.2-full.timestamp.amd64: 1695896083
+13.2-full.sum.amd64: aa9dc4cdebc0fac739b2e036291b8a9d69c2f50f783941384fe8928f6011e56d
+13.2-full.size.amd64: 135344176
 13.2-full.source.amd64: "http://appjail.hpc.at/gonic/13.2-full-amd64-image.appjail"
 
 tags+: 13.2-minimal
 13.2-minimal.arch: amd64
 13.2-minimal.name: "gonic"
-13.2-minimal.timestamp.amd64: 1694786253
-13.2-minimal.sum.amd64: c39a7bc57663e2adb982f9086f08979500ab8b510ecd196bd479fe310b89ed3e
-13.2-minimal.size.amd64: 12688040
+13.2-minimal.timestamp.amd64: 1695826839
+13.2-minimal.sum.amd64: 8b7121632cefb6781bc57c3a06b63efc3f6ea65dec56a9178525596b0f3bfafb
+13.2-minimal.size.amd64: 12670504
 13.2-minimal.source.amd64: "http://appjail.hpc.at/gonic/13.2-minimal-amd64-image.appjail"
