@@ -52,3 +52,6 @@ CMD echo "======> Installing rc script... <======"
 CMD mkdir -vp /usr/local/etc/rc.d
 COPY --verbose files/gonic.in /usr/local/etc/rc.d/gonic
 CMD chmod +x /usr/local/etc/rc.d/gonic
+
+CMD echo "======> Enabling gonic... <======"
+SYSRC gonic_enable=YES

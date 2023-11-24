@@ -119,8 +119,6 @@ Make any changes you want to your image.
 ```
 INCLUDE options/network.makejail
 INCLUDE gh+AppJail-makejails/gonic --file build.makejail
-
-SYSRC gonic_enable=YES
 ```
 
 Build the jail:
