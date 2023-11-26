@@ -112,47 +112,6 @@ appjail restart gonic
 
 * `gonic_tag` (default: `13.2-full`): see [#tags](#tags).
 
-## How to build the Image
-
-Make any changes you want to your image.
-
-```
-INCLUDE options/network.makejail
-INCLUDE gh+AppJail-makejails/gonic --file build.makejail
-```
-
-Build the jail:
-
-```sh
-# Default options
-appjail makejail -j gonic -- \
-    --gonic_options "$PWD/options/network.makejail"
-# Minimal
-appjail makejail -j gonic -- \
-    --gonic_jukebox 0 \
-    --gonic_transcode_audio 0 \
-    --gonic_options "$PWD/options/network.makejail"
-```
-
-Remove unportable or unnecessary files and directories and export the jail:
-
-```sh
-appjail sysrc jail gonic -x defaultrouter
-appjail stop gonic
-appjail cmd local gonic sh -c "rm -f var/log/*"
-appjail cmd local gonic sh -c "rm -f var/cache/pkg/*"
-appjail cmd local gonic sh -c "rm -rf tmp/gonic-jukebox-*"
-appjail cmd local gonic sh -c "rm -f var/db/gonic/data/*"
-appjail image export gonic
-```
-
-### Arguments
-
-* `gonic_builder` (default: `gonicb`): Makejail builder name.
-* `gonic_options` (mandatory): Makejail that contains options for the Makejail builder. This Makejail is intended for passing network options. An absolute path must be passed.
-* `gonic_jukebox` (default: `1`): Install the dependencies required by the jukebox mode.
-* `gonic_transcode_audio` (default: `1`): Install the dependencies required to transcode audio.
-
 ## Tags
 
 | Tag            | Arch     | Version        | Type   | `gonic_jukebox` | `gonic_transcode_audio` |
