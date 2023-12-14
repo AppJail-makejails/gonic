@@ -1,0 +1,3 @@
+OPTION volume=gonic-db mountpoint:/var/db/gonic owner:1001 group:1001
+OPTION volume=gonic-cache mountpoint:/var/cache/gonic owner:1001 group:1001
+OPTION volume=gonic-music mountpoint:/var/db/gonic/music owner:1001 group:1001
