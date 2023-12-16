@@ -112,6 +112,14 @@ appjail restart gonic
 
 * `gonic_tag` (default: `13.2-full`): see [#tags](#tags).
 
+### Volumes
+
+| Name        | Owner | Group | Perm | Type | Mountpoint          |
+| ----------- | ----- | ----- | ---- | ---- | ------------------- |
+| gonic-db    | 1001  | 1001  |  -   |  -   | /var/db/gonic       |
+| gonic-cache | 1001  | 1001  |  -   |  -   | /var/cache/gonic    |
+| gonic-music | 1001  | 1001  |  -   |  -   | /var/db/gonic/music |
+
 ## Tags
 
 | Tag            | Arch     | Version        | Type   | `gonic_jukebox` | `gonic_transcode_audio` |
