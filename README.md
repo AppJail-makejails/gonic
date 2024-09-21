@@ -110,7 +110,7 @@ appjail restart gonic
 
 ### Arguments
 
-* `gonic_tag` (default: `13.3-full`): see [#tags](#tags).
+* `gonic_tag` (default: `13.4-full`): see [#tags](#tags).
 
 ### Volumes
 
@@ -124,7 +124,7 @@ appjail restart gonic
 
 | Tag            | Arch     | Version        | Type   | `gonic_jukebox` | `gonic_transcode_audio` |
 | -------------- | -------- | -------------- | ------ | --------------- | ----------------------- |
-| `13.3-full`    | `amd64`  | `13.3-RELEASE` | `thin` |      `1`        |           `1`           |
-| `13.3-minimal` | `amd64`  | `13.3-RELEASE` | `thin` |      `0`        |           `0`           |
+| `13.4-full`    | `amd64`  | `13.4-RELEASE` | `thin` |      `1`        |           `1`           |
+| `13.4-minimal` | `amd64`  | `13.4-RELEASE` | `thin` |      `0`        |           `0`           |
 | `14.1-full`    | `amd64`  | `14.1-RELEASE` | `thin` |      `1`        |           `1`           |
 | `14.1-minimal` | `amd64`  | `14.1-RELEASE` | `thin` |      `0`        |           `0`           |
