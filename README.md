@@ -126,5 +126,5 @@ appjail restart gonic
 | -------------- | -------- | -------------- | ------ | --------------- | ----------------------- |
 | `13.4-full`    | `amd64`  | `13.4-RELEASE` | `thin` |      `1`        |           `1`           |
 | `13.4-minimal` | `amd64`  | `13.4-RELEASE` | `thin` |      `0`        |           `0`           |
-| `14.1-full`    | `amd64`  | `14.1-RELEASE` | `thin` |      `1`        |           `1`           |
-| `14.1-minimal` | `amd64`  | `14.1-RELEASE` | `thin` |      `0`        |           `0`           |
+| `14.2-full`    | `amd64`  | `14.2-RELEASE` | `thin` |      `1`        |           `1`           |
+| `14.2-minimal` | `amd64`  | `14.2-RELEASE` | `thin` |      `0`        |           `0`           |
