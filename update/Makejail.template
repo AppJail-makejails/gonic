@@ -1,6 +1,6 @@
 INCLUDE options/options.makejail
 
-ARG gonic_tag=13.4-full
+ARG gonic_tag=%%TAG1%%-full
 ARG gonic_ajspec=gh+AppJail-makejails/gonic
 
 FROM --entrypoint "${gonic_ajspec}" gonic:${gonic_tag}
