@@ -26,7 +26,6 @@ SERVICE ldconfig restart
 RAW if [ "${gonic_jukebox}" != 0 ]; then
 	CMD echo "======> Installing dependencies (jukebox)... <======"
 	PKG mpv
-	SYSRC gonic_jukebox=YES
 RAW fi
 
 RAW if [ "${gonic_transcode_audio}" != 0 ]; then

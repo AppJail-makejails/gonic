@@ -5,5 +5,9 @@ ARG gonic_ajspec=gh+AppJail-makejails/gonic
 
 FROM --entrypoint "${gonic_ajspec}" gonic:${gonic_tag}
 
+RAW if appjail pkg jail "${APPJAIL_JAILNAME}" info -q mpv; then
+        SYSRC gonic_jukebox=YES
+RAW fi
+
 SYSRC gonic_enable=YES
 SERVICE gonic start
