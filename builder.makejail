@@ -15,4 +15,4 @@ WORKDIR /gonic
 
 RUN go125 mod download
 ENV GOOS=freebsd
-RUN go125 build -o gonic cmd/gonic
+RUN go125 build -o gonic ./cmd/gonic
