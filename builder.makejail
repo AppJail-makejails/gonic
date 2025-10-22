@@ -1,6 +1,8 @@
 INCLUDE options/options.makejail
 INCLUDE resizewin-fix.makejail
 
+OPTION ephemeral
+
 CMD echo "======> Installing dependencies (build) <======"
 PKG git-lite go pkgconf taglib sqlite3
 
