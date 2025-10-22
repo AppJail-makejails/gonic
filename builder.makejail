@@ -4,7 +4,7 @@ INCLUDE resizewin-fix.makejail
 OPTION ephemeral
 
 CMD echo "======> Installing dependencies (build) <======"
-PKG git-lite go pkgconf taglib sqlite3
+PKG git-lite go125 pkgconf taglib sqlite3
 
 CMD echo "======> Cloning... <======"
 CMD git clone --depth 1 https://github.com/sentriz/gonic.git /gonic
@@ -13,6 +13,6 @@ CMD echo "======> Compiling... <======"
 
 WORKDIR /gonic
 
-RUN go mod download
+RUN go125 mod download
 ENV GOOS=freebsd
-RUN go build -o gonic cmd/gonic/gonic.go
+RUN go125 build -o gonic cmd/gonic/gonic.go
