@@ -110,7 +110,7 @@ appjail restart gonic
 
 ### Arguments
 
-* `gonic_tag` (default: `13.5-full`): see [#tags](#tags).
+* `gonic_tag` (default: `14.3-full`): see [#tags](#tags).
 * `gonic_ajspec` (default: `gh+AppJail-makejails/gonic`): Entry point where the `appjail-ajspec(5)` file is located.
 
 ### Volumes
@@ -125,7 +125,7 @@ appjail restart gonic
 
 | Tag            | Arch     | Version        | Type   | `gonic_jukebox` | `gonic_transcode_audio` |
 | -------------- | -------- | -------------- | ------ | --------------- | ----------------------- |
-| `13.5-full`    | `amd64`  | `13.5-RELEASE` | `thin` |      `1`        |           `1`           |
-| `13.5-minimal` | `amd64`  | `13.5-RELEASE` | `thin` |      `0`        |           `0`           |
 | `14.3-full`    | `amd64`  | `14.3-RELEASE` | `thin` |      `1`        |           `1`           |
 | `14.3-minimal` | `amd64`  | `14.3-RELEASE` | `thin` |      `0`        |           `0`           |
+| `15-full`    | `amd64`  | `15` | `thin` |      `1`        |           `1`           |
+| `15-minimal` | `amd64`  | `15` | `thin` |      `0`        |           `0`           |
