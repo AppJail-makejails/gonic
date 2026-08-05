@@ -2,130 +2,124 @@
 
 Gonic is a FLOSS alternative to subsonic music streaming server / subsonic API written in Go.
 
-## Features
+Features:
 
-* Browsing by folder (keeping your full tree intact).
-* Browsing by tags (using taglib - supports mp3, opus, flac, ape, m4a, wav, etc.)
-* On-the-fly audio transcoding and caching.
-* Jukebox mode.
-* Support for podcasts.
-* Pretty fast scanning.
-* Multiple users, each with their own transcoding preferences, playlists, top tracks, top artists, etc.
-* last.fm scrobbling.
-* listenbrainz scrobbling.
-* Artist similarities and biographies from the last.fm api.
-* Multiple genre support.
-* A web interface for configuration (set up last.fm, manage users, start scans, etc.).
-* Support for the album-artist tag, to not clutter your artist list with compilation album appearances.
-* Written in go, so lightweight and suitable for a raspberry pi. 
-* Newer salt and token auth.
-* Tested on airsonic-refix, symfonium, dsub, jamstash, sublime music, soundwaves, stmp, strawberry, and ultrasonic.
+*  browsing by folder (keeping your full tree intact)
+*  browsing by tags (using taglib - supports mp3, opus, flac, ape, m4a, wav,
+   etc.)
+*  on-the-fly audio transcoding and caching (requires ffmpeg) (thank you spijet)
+*  pretty fast scanning (with my library of ~27k tracks, initial scan takes
+   about 10m, and about 5s after incrementally)
+*  multiple users, each with their own transcoding preferences, playlists, top
+   tracks, top artists, etc.
+*  last.fm scrobbling
+*  artist similarities and biographies from the last.fm api
+*  a web interface for configuration (set up last.fm, manage users, start scans,
+   etc.)
+*  support for the album-artist tag, to not clutter your artist list with
+   compilation album appearances
+*  written in go, so lightweight and suitable for a raspberry pi, etc.
+*  newer salt and token auth
+*  tested on dsub, jamstash, sublime music, and soundwaves
 
 github.com/sentriz/gonic
 
-<img src="https://github.com/sentriz/gonic/raw/master/.github/logo.png?raw=true" alt="gonic logo" width="60%" height="auto">
+<img src="https://github.com/sentriz/gonic/blob/master/.github/logo.png?raw=true" width="30%" height="auto" alt="Gonic logo">
 
 ## How to use this Makejail
 
-### Basic usage
+### Standalone
 
-```
-INCLUDE options/network.makejail
-INCLUDE gh+AppJail-makejails/gonic
-
-OPTION expose=4747
-
-ARG datadir=/var/gonic/data
-ARG cachedir=/var/gonic/cache
-ARG musicdir=/var/gonic/music
-ARG podcastsdir=/var/gonic/podcasts
-ARG playlistsdir=/var/gonic/playlists
-
-CMD echo "======> Mounting directories... <======"
-
-MOUNT "${datadir}" /var/db/gonic/data
-MOUNT "${cachedir}" /var/cache/gonic
-MOUNT "${musicdir}" /var/db/gonic/music
-MOUNT "${podcastsdir}" /var/db/gonic/podcasts
-MOUNT "${playlistsdir}" /var/db/gonic/playlists
-
-CMD chown -R gonic:gonic /var/db/gonic
-CMD chown -R gonic:gonic /var/cache/gonic
-
-CMD echo
-CMD echo "===> Done <==="
-CMD echo
-
-STAGE cmd
-
-USER gonic
-ENV GONIC_DB_PATH=/var/db/gonic/data/gonic.db
-ENV GONIC_LISTEN_ADDR=:4747
-ENV GONIC_MUSIC_PATH=/var/db/gonic/music
-ENV GONIC_PODCAST_PATH=/var/db/gonic/podcasts
-ENV GONIC_CACHE_PATH=/var/cache/gonic
-ENV GONIC_PLAYLISTS_PATH=/var/db/gonic/playlists
-ENV GONIC_SCAN_INTERVAL=3
-ENV GONIC_SCAN_AT_START_ENABLED=1
-ENV GONIC_SCAN_WATCHED_ENABLED=1
-ENV GONIC_JUKEBOX_ENABLED=1
-RUN gonic
+```console
+$ mkdir -p /var/appjail-volumes/gonic/data
+$ appjail oci run -Pd \
+    -o overwrite=force \
+    -o virtualnet=":<random> default" \
+    -o nat \
+    -o fstab="/var/appjail-volumes/gonic/data /data" \
+    -o fstab="/path/to/music /music nullfs ro" \
+    -o fstab="/path/to/podcasts /podcasts" \
+    -o fstab="/path/to/playlists /playlists" \
+    -o fstab="/path/to/cache /cache" \
+    ghcr.io/appjail-makejails/gonic gonic
 ```
 
-Where `options/network.makejail` are the options that suit your environment, for example:
+### Deploy using `appjail-director`
 
+```yaml
+options:
+  - virtualnet: ':<random> default'
+  - nat:
+
+services:
+  gonic:
+    name: gonic
+    makejail: gh+AppJail-makejails/gonic
+    options:
+      - expose: '4747:8080' # for external hosts
+      - container: 'args:--pull'
+      # set the following if you've enabled jukebox
+      - mount_devfs:
+      - device: 'include $devfsrules_hide_all'
+      - device: 'include $devfsrules_unhide_basic'
+      - device: 'include $devfsrules_unhide_login'
+      - device: "path 'dsp*' unhide"
+    volumes:
+      - data: /data # gonic db etc
+      - music: /music # your music
+      - podcasts: /podcasts # your podcasts
+      - playlists: /playlists # your playlists
+      - cache: /cache # transcode / covers / etc cache dir
+    oci:
+      environment:
+        - TZ: !ENV '${TZ}'
+        # optionally, see more available env vars in the readme: https://github.com/sentriz/gonic/wiki/installation#with-docker
+
+volumes:
+  data:
+    device: /var/appjail-volumes/gonic/data
+  music:
+    device: /path/to/music
+    options: ro
+  podcasts:
+    device: /path/to/podcasts
+  playlists:
+    device: /path/to/playlists
+  cache:
+    device: /path/to/cache
 ```
-ARG network?
-ARG interface=gonic
 
-OPTION virtualnet=${network}:${interface} default
-OPTION nat
-```
+### Arguments (stage: build)
 
-Open a shell and run `appjail makejail`:
+* `gonic_from` (default: `ghcr.io/appjail-makejails/gonic`): Location of OCI image. See also [OCI Configuration](#oci-configuration).
+* `gonic_tag` (default: `latest`): OCI image tag. See also [OCI Configuration](#oci-configuration).
 
-```sh
-appjail makejail -j gonic
-# or use a network explicitly
-appjail makejail -j gonic -- --network development
-```
+### Environment (OCI image)
 
-### Jukebox
-
-If you want to use jukebox mode you need to put in your `devfs.rules(5)` file:
-
-```
-[devfsrules_gonic=12]
-add include $devfsrules_jail
-add path 'dsp*' unhide
-```
-
-and:
-
-```sh
-service devfs restart
-appjail-config set -j gonic devfs_ruleset=12
-appjail restart gonic 
-```
-
-### Arguments
-
-* `gonic_tag` (default: `14.3-full`): see [#tags](#tags).
-* `gonic_ajspec` (default: `gh+AppJail-makejails/gonic`): Entry point where the `appjail-ajspec(5)` file is located.
+* `PGID` (default: `1000`): Equivalent to `PUID` but for the Process Group ID.
+* `PUID` (default: `1000`): Process User ID for the container's main process, allowing you to match the owner of files written to mounted host volumes to your host system's user. Writable volumes are changed based on this environment variable.
 
 ### Volumes
 
-| Name        | Owner | Group | Perm | Type | Mountpoint          |
-| ----------- | ----- | ----- | ---- | ---- | ------------------- |
-| gonic-db    | 1001  | 1001  |  -   |  -   | /var/db/gonic       |
-| gonic-cache | 1001  | 1001  |  -   |  -   | /var/cache/gonic    |
-| gonic-music | 1001  | 1001  |  -   |  -   | /var/db/gonic/music |
+| Name | Owner | Group | Perm | Type | Mountpoint |
+| --- | --- | --- | --- | --- | --- |
+| appjail-263aca83a3-data | `${PUID}` | `${PGID}` | - | - | /data |
+| appjail-3e431e873f-music | - | - | - | - | /music |
+| appjail-58d2e6e563-podcasts | `${PUID}` | `${PGID}` | - | - | /podcasts |
+| appjail-e1002a08c2-playlists | `${PUID}` | `${PGID}` | - | - | /playlists |
+| appjail-fbfced411c-cache | `${PUID}` | `${PGID}` | - | - | /cache |
 
-## Tags
+## OCI Configuration
 
-| Tag            | Arch     | Version        | Type   | `gonic_jukebox` | `gonic_transcode_audio` |
-| -------------- | -------- | -------------- | ------ | --------------- | ----------------------- |
-| `14.3-full`    | `amd64`  | `14.3-RELEASE` | `thin` |      `1`        |           `1`           |
-| `14.3-minimal` | `amd64`  | `14.3-RELEASE` | `thin` |      `0`        |           `0`           |
-| `15-full`    | `amd64`  | `15` | `thin` |      `1`        |           `1`           |
-| `15-minimal` | `amd64`  | `15` | `thin` |      `0`        |           `0`           |
+```yaml
+build:
+  variants:
+    - tag: 15.1
+      containerfile: Containerfile
+      aliases: ["latest"]
+      default: true
+      args:
+        FREEBSD_RELEASE: "15.1"
+        NO_PKGCLEAN: "1"
+      cache_dirs: ["pkgcache0:/var/cache/pkg"]
+```

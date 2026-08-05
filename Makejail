@@ -1,13 +1,6 @@
-INCLUDE options/options.makejail
+ARG gonic_from=ghcr.io/appjail-makejails/gonic
+ARG gonic_tag=latest
 
-ARG gonic_tag=14.3-full
-ARG gonic_ajspec=gh+AppJail-makejails/gonic
-
-FROM --entrypoint "${gonic_ajspec}" gonic:${gonic_tag}
-
-RAW if appjail pkg jail "${APPJAIL_JAILNAME}" info -q mpv; then
-        SYSRC gonic_jukebox=YES
-RAW fi
-
-SYSRC gonic_enable=YES
-SERVICE gonic start
+OPTION container=boot
+OPTION overwrite=force
+OPTION from=${gonic_from}:${gonic_tag}
