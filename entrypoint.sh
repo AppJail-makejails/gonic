@@ -6,7 +6,7 @@ set -e
 
 create_user
 
-chown -R noroot:noroot /cache /data /podcasts /playlists
+change_owner /cache /data /podcasts /playlists
 
 if [ "${1#-}" != "$1" ]; then
     set -- gonic "$@"
