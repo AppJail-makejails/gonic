@@ -14,7 +14,7 @@ LABEL org.opencontainers.image.title="Gonic" \
 RUN set -xe; \
     \
     pkg update; \
-    pkg install -U gonic; \
+    pkg install gonic; \
     \
     if [ -z "${NO_PKGCLEAN}" ]; then \
         pkg clean -a; \
